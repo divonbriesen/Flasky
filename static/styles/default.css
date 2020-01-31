@@ -14,6 +14,11 @@ header, footer
 	font-weight: bold;
 }
 
+td
+{
+	border: 2px dotted indigo;
+}
+
 h1, h2, h3
 {
 	font-family: Times, serif;
