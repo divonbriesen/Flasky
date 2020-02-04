@@ -27,12 +27,23 @@ def index():
             return redirect('/')
         except:
             return "There was an issue adding your task."
+            
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template("index.htm", tasks=tasks) 
     #render_template knows to look in templates folder
     #"template inheritance" - "master html file" - inherit
     #from each other page, and change what's relevant.
+@app.route('/delete/<int:id>')
+def delete(id):
+    task_to_delete = Todo.query.get_or_404(id)
+
+    try:
+        db.session.delete(task_to_delete)
+        db.session.commit();
+        return redirect('/')
+    except:
+        return "there was a delete problem"
 
 if __name__ == "__main__":
     app.run(debug=True)
