@@ -12,16 +12,17 @@ gradebook = {
             'susan': [55, 66, 88, 97], 
             'fred': [88, 55, 78, 94, 81],
             'slacker': [33, 0, 29,],
-            'noshow': [0]
+            'noshow': [0, 0, 0]
          }
 
 for thisUser in gradebook:
     theseGrades = gradebook.get(thisUser)
     sumOfGrades = 0
 
+
     for aGrade in theseGrades:
         sumOfGrades += aGrade
     averageGrade = sumOfGrades/len(theseGrades)
 
-    print('The average grade for', thisUser, 'is', format(averageGrade,'.2f'))
+    print(thisUser,"'s grades are: ", theseGrades[0], theseGrades[1], theseGrades[2], " - which average to: ", format(averageGrade,'.2f'))
         
