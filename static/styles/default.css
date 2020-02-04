@@ -1,22 +1,47 @@
 body
 {
 	font-family: tahoma;
-	color: red;
-	background-color: silver;
+	color: silver;
+	background-color: teal;
 	margin-left: 200px;
 	margin-right: 200px;
+	font-size: 150%;
 }
 
 header, footer
 {
 	text-align: center;
-	color: green;
+	color: ivory;
 	font-weight: bold;
+}
+
+main
+{
+	background-color: grey;
+	padding: 100px;
+}
+
+a
+{
+	text-decoration: none;
+	color: blueviolet;
+}
+
+a:hover
+{
+	text-decoration: overline underline;
+}
+
+table
+{
+	padding: 5px;
+	border: 4px double indigo;
 }
 
 td
 {
-	border: 2px dotted indigo;
+	padding: 5px;
+	border: 1px solid teal;
 }
 
 h1, h2, h3

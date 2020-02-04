@@ -1,35 +1,68 @@
 {% extends 'base.htm' %}
 {% block head %}
-<h1>Zen Master</h1>
+
 {% endblock %} 
 {% block body %}
-<div class = "content">
-
-<h2>ZenMaster</h2>
 
 <table>
 <tr>
-    <th>Task</th>
-    <th>Added</th>
-    <th>Actions</th>
+    <th>To-Do</th>
+    <th>Date</th>
+    <th>Edit</th>
 </tr>
-{% for task in tasks %}
+    {% if tasks|length < 1 %}
+    <h4>there are no tasks - create one!</h4>
+    {% else %}
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.content}}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href = "/delete/{{task.id}}">Delete</a>
+                    <br/>
+                    <a href = "/update/{{task.id}}">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    {% if true %}
     <tr>
-        <td>{{ task.content}}</td>
-        <td>{{ task.date_created.date() }}</td>
         <td>
-            <a href = "/delete/{{task.id}}">Delete</a>
-            <br/>
-            <a href = "/update/{{task.id}}">Update</a>
+            <form action = "/" method = "POST">     
+                <input type = "text" name = "content" id = "content"/>
+        </td>
+        <td id = "currentdate">
+            <script>
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+                today = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("currentdate").innerHTML = today;
+            </script>
+        </td>
+        <td>
+            <input type = "submit" value = "Add this Task" />
+            </form>
         </td>
     </tr>
-    {% endfor %}
+
+    <tr>
+        <td>
+            <form action = "delete/{{task.id}}" method = "DELETE">
+                <input type = "text" name = "content" id = "content" 
+                value = "BLARGH" />
+                       <!-- value = "{{task.content}}" --> 
+        </td>
+        <td>
+           
+        </td>
+        <td>
+            <input type = "submit" value = "Update Task!" />
+            </form>
+        </td>
+    </tr>
+    {% endif %}
 </table>
-<form action = "/" method = "POST">
-    <input type = "text" name = "content" id = "content" />
-    <input type = "submit" value = "Add Task" />
 
-</form>
-
-</div>
 {% endblock %} 

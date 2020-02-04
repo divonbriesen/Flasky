@@ -7,29 +7,37 @@
         
         <link rel = "stylesheet" 
         href = "{{ url_for('static', filename='styles/default.css')}}" type = "text/css" />
-		{% block head %}{% endblock %} 
-        <!-- inserts code for all other pages -->
+        {% block head %}
+        <!-- place for unique code on other pages that use this page
+            as their base -->
+        {% endblock %} 
+
         <title>
-        a flask page
+            ZEN MASTER - a DubBriesenMoore Production
 		</title>
 	</head>
-<body>
-    {% block body %}{% endblock %} 
-<!-- header here -->
-
+<body>	
+<header>
+    <h1>Welcome to ZEN MASTER!</h1>
+    <h2>Where your predictions are proven....</h2>
+</header>
 <main>	
-	<h1>Introducing !!</h1>
-	<figure>
-		<img src="{{ url_for('static', filename='images/users/profileimage (00).png')}}" alt = "an image!" />
-		<figcaption>
-			a caption
-		</figcaption>
-	</figure>
-	<ul>
-        <li>a list thing</li>
-        <li>another list thing</li>
-    </ul>
+{% block body %}
+   <p> evidently nothing between these blocks shows up at all on the page<p>
+   </p>>
+{% endblock %} 
 </main>
 <!-- footer here -->
+<footer>
+    Designed by bumbleshoot enterprises Ltd. 
+    <br/>
+
+    <figure>
+		<img src="{{ url_for('static', filename='images/users/profileimage (00).png')}}" alt = "an image!" height = "300" />
+		<figcaption>
+            &copy; 2099	
+		</figcaption>
+	</figure>
+</footer>
 </body>
 </html>

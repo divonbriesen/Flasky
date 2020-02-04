@@ -4,8 +4,9 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-#/// is relative path, //// is absolute path
+# /// is relative path, //// is absolute path
 db = SQLAlchemy(app)
+
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +15,7 @@ class Todo(db.Model):
 
     def __repr__(self):
         return '<Task %r>' % self.id
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -25,14 +27,15 @@ def index():
             db.session.add(new_task)
             db.session.commit()
             return redirect('/')
-        except:
-            return "There was an issue adding your task."          
+        except IOError:
+            return "There was an issue adding your task."  
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template("index.htm", tasks=tasks) 
-    #render_template knows to look in templates folder
+    # render_template knows to look in templates folder
     # "template inheritance" - "master html file" - inherit
-    #from each other page, and change what's relevant.
+    # from each other page, and change what's relevant.
+
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -42,20 +45,26 @@ def delete(id):
         db.session.delete(task_to_delete)
         db.session.commit()
         return redirect('/')
-    except:
+    except IOError:
         return "there was a delete problem"
+
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
-    task_to_update = Todo.query.get_or_404(id)
+    task = Todo.query.get_or_404(id)
 
     if request.method == 'POST':
-        db.session.update(task_to_update)
-        db.session.commit()
-        return redirect('/')
-    else:
-        return render_template('update.html', task=task_to_update)
+        # task.content = request.form['content']
+        task.content = request.form['contenttoupdate']
 
+        try:
+            db.session.commit()
+            return redirect('/')
+        except IOError:
+            return 'There was an issue updating your task.'
+    else:
+        # return render_template('update.html', task=task)
+        return 'funky monkey'
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -28,17 +28,20 @@ for thisUser in gradebook:
         summaryMessage += "has no grades."
 
     elif len(theseGrades) == 1:
-        summaryMessage += "'s grade is: ", theseGrades[0],
-        " - which averages to: ", format(theseGrades[0], '.2f')
+        summaryMessage += "'s grade is: " + str(theseGrades[0]) \
+        + " - which averages to: " + str(format(theseGrades[0], '.2f'))
     else:
         for aGrade in theseGrades:
             sumOfGrades += aGrade
 
         averageGrade = sumOfGrades/len(theseGrades)
 
-        listOfGrades = theseGrades[0], theseGrades[1], theseGrades[2]
+        listOfGrades = []
 
-        summaryMessage = "'s grades are: and so on - which average to: ", format(averageGrade, '.2f')
+        for i in range (len(theseGrades)):
+            listOfGrades.append(str(theseGrades[i]))
+
+        summaryMessage = thisUser + "'s grades are: " + str(listOfGrades) + " - which average to: " + format(averageGrade, ".2f")
 
     print(summaryMessage)
 # end for thisUser in gradebook
