@@ -48,13 +48,13 @@
                         </form>
                     </td>
                 </tr>
-   
+        {% if taskstoupdate %}
                 <tr>
                     <td>
-                        <form action = "/update/{{taskToUpdate.id}}" method = "POST">     
+                        <form action = "/update/{{tasktoupdate.id}}" method = "POST">     
                         <input type = "text" name = "content" 
                             id = "content"
-                            value = "{{taskToUpdate.content}}" />
+                            value = "{{taskstoupdate.content}}" />
                     </td>
                     <td>
                         (now)
@@ -64,7 +64,7 @@
                         </form>
                     </td>
                 </tr>
-
+        {% endif %}
 
         {% if taskstoget|length ==  0 %}
                 <tr>
