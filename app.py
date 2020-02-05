@@ -17,11 +17,12 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 
-@app.route('/', methods=['POST', 'GET'])
+# @app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        task_content = request.form['content']
-        new_task = Todo(content=task_content)
+        taskContent = request.form['content']
+        new_task = Todo(content=taskContent)
 
         try:
             db.session.add(new_task)
@@ -29,9 +30,9 @@ def index():
             return redirect('/')
         except IOError:
             return "There was an issue adding your task."  
-    else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template("index.htm", tasks=tasks) 
+    else:  # i'ts GET, not generating a form, just loading page
+        tasksToGet = Todo.query.order_by(Todo.date_created).all()
+        return render_template("index.htm", taskstoget=tasksToGet) 
     # render_template knows to look in templates folder
     # "template inheritance" - "master html file" - inherit
     # from each other page, and change what's relevant.
@@ -39,32 +40,34 @@ def index():
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    taskToDelete = Todo.query.get_or_404(id)
 
     try:
-        db.session.delete(task_to_delete)
+        db.session.delete(taskToDelete)
         db.session.commit()
         return redirect('/')
     except IOError:
         return "there was a delete problem"
 
-
+#  @app.route('/update/<int:id>', methods=['GET', 'POST'])
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
-    task = Todo.query.get_or_404(id)
+    taskToUpdate = Todo.query.get_or_404(id)
 
-    if request.method == 'POST':
+    if request.method == 'POST':  # form has been submitted, get value
         # task.content = request.form['content']
-        task.content = request.form['contenttoupdate']
+        taskToUpdate.content = request.form['content']
 
         try:
             db.session.commit()
             return redirect('/')
         except IOError:
             return 'There was an issue updating your task.'
-    else:
-        # return render_template('update.html', task=task)
-        return 'funky monkey'
+    else:  # form not submitted, just show page
+        print("About to update the entry for " + taskToUpdate.content + "...")
+        # return render_template('update.html', tasktoupdate=taskToUpdate)
+        return render_template("index.htm", tasktoupdate=taskToUpdate) 
+
 
 if __name__ == "__main__":
     app.run(debug=True)

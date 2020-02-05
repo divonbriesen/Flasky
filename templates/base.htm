@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang = "en">
-	<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content = "ie=edge">
-        
-        <link rel = "stylesheet" 
-        href = "{{ url_for('static', filename='styles/default.css')}}" type = "text/css" />
-        {% block head %}
-        <!-- place for unique code on other pages that use this page
-            as their base -->
-        {% endblock %} 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content = "ie=edge">
+    
+    <link rel = "stylesheet" 
+    href = "{{ url_for('static', filename='styles/default.css') }}" type = "text/css" />
+    {% block head %}
+    <!-- place for unique code on other pages that use this page
+        as their base -->
+    {% endblock %} 
 
-        <title>
-            ZEN MASTER - a DubBriesenMoore Production
-		</title>
-	</head>
+    <title>
+        ZEN MASTER - a DubBriesenMoore Production
+    </title>
+</head>
 <body>	
-<header>
-    <h1>Welcome to ZEN MASTER!</h1>
-    <h2>Where your predictions are proven....</h2>
-</header>
-<main>	
-{% block body %}
-   <p> evidently nothing between these blocks shows up at all on the page<p>
-   </p>>
-{% endblock %} 
-</main>
-<!-- footer here -->
-<footer>
-    Designed by bumbleshoot enterprises Ltd. 
-    <br/>
+    <header>
+        <h1>Welcome to ZEN MASTER!</h1>
+        <h2>Where your predictions are proven....</h2>
+    </header>
+    <!-- ========================================== -->
+    <main>	
+    {% block body %}
+        <p>nothing between these blocks shows up</p>
+    {% endblock %} 
+    </main>
+    <!-- ========================================== -->
+    <footer>
+        Designed by bumbleshoot enterprises Ltd. 
+        <br/>
 
-    <figure>
-		<img src="{{ url_for('static', filename='images/users/profileimage (00).png')}}" alt = "an image!" height = "300" />
-		<figcaption>
-            &copy; 2099	
-		</figcaption>
-	</figure>
-</footer>
+        <figure>
+            <img src="{{ url_for('static', filename='images/users/profileimage (00).png') }}" alt = "an image!" height = "300" />
+            <figcaption>
+                &copy; 2099	
+            </figcaption>
+        </figure>
+    </footer>
 </body>
 </html>
