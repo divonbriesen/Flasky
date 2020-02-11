@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -17,8 +17,7 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 
-# @app.route('/', methods=['POST', 'GET'])
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
         taskContent = request.form['content']
@@ -27,10 +26,12 @@ def index():
         try:
             db.session.add(new_task)
             db.session.commit()
-            return redirect('/')
+            db.session.refresh(new_task)  # added from stack overflow
+            id = new_task.id              # added from stack overflow
+            return redirect('/?action=insert&id=' + str(id))
         except IOError:
             return "There was an issue adding your task."  
-    else:  # i'ts GET, not generating a form, just loading page
+    else:  # it's GET, not generating a form, just loading page
         tasksToGet = Todo.query.order_by(Todo.date_created).all()
         return render_template("index.htm", taskstoget=tasksToGet) 
     # render_template knows to look in templates folder
@@ -45,11 +46,10 @@ def delete(id):
     try:
         db.session.delete(taskToDelete)
         db.session.commit()
-        return redirect('/')
+        return redirect('/?action=delete&id=' + str(id))
     except IOError:
         return "there was a delete problem"
 
-#  @app.route('/update/<int:id>', methods=['GET', 'POST'])
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     taskToUpdate = Todo.query.get_or_404(id)
@@ -60,7 +60,7 @@ def update(id):
 
         try:
             db.session.commit()
-            return redirect('/')
+            return redirect('/?action=update&id=' + str(id))
         except IOError:
             return 'There was an issue updating your task.'
     else:  # form not submitted, just show page

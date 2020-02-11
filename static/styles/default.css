@@ -1,7 +1,7 @@
 body
 {
-	font-family: tahoma;
-	color: silver;
+	font-family: tahoma, sans-serif;
+	color: ivory;
 	background-color: teal;
 	margin-left: 200px;
 	margin-right: 200px;
@@ -11,14 +11,12 @@ body
 header, footer
 {
 	text-align: center;
-	color: ivory;
-	font-weight: bold;
 }
 
 main
 {
-	background-color: grey;
-	padding: 100px;
+	padding: 20px;
+	margin: 0 auto;
 }
 
 a
@@ -34,8 +32,13 @@ a:hover
 
 table
 {
+	margin: 0 auto;
 	padding: 5px;
 	border: 4px double indigo;
+}
+th
+{
+	text-align: center;
 }
 
 td
@@ -58,7 +61,6 @@ figure
 figcaption
 {
 	font-style: italic;
-	font-weight: bold;
 }
 
 .attribute

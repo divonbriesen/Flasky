@@ -4,57 +4,93 @@
 {% endblock %} 
 {% block body %}
 
+{% if  request.args.get('action')  == 'update' %}
+    <h3>Just UPDATED record id 
+        {{request.args.get('id')}}.</h3>
+{% elif request.args.get('action') == 'delete' %}
+    <h3>Just DELETED record id 
+        {{request.args.get('id')}}.</h3>
+{% elif request.args.get('action') == 'inserte' %}
+    <h3>Just INSERTED new record id {{request.args.get('id')}}.</h3>
+{% else %}
+    <h3>Else not sure what just happened. No past action specified.</h3>
+{% endif %}
+
     <table>
         <tr>
             <th colspan = "3">
-                You have  {{taskstoget|count}} tasks
+                You have  {{taskstoget|count}} tasks. Add one below!
+                <hr/>
             </th>
         </tr>
         <tr>
-            <th>To-Do</th>
+            <th>Task</th>
             <th>Date</th>
             <th>Edit</th>
         </tr>
+        <tr>
+            <td>
+                <form action = "/" method = "POST">     
+                    <input type = "text" name = "content" id = "content"/>
+            </td>
+            <td id = "currentdate">
+                <script>
+                    var today = new Date();
+                    var dd = String(today.getDate()).padStart(2, '0');
+                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = today.getFullYear();
+                    today = yyyy + '-' + mm + '-' + dd;
+                    document.getElementById("currentdate").innerHTML = today;
+                </script>
+            </td>
+            <td>
+                <input type = "submit" value = "Add this Task" />
+                </form>
+            </td>
+        </tr>
+
         {% if taskstoget|length > 0 %}
             {% for task in taskstoget %}
                 <tr>
                     <td>{{ task.content}}</td>
                     <td>{{ task.date_created.date() }}</td>
                     <td>
-                        <a href = "/delete/{{task.id}}">Delete</a>
-                        <br/>
-                        <a href = "/update/{{task.id}}">Update</a>
+                         <a href = "/update/{{task.id}}">Update</a>
+                         |
+                         <a href = "/delete/{{task.id}}">Dxlxte</a>
+                      
                     </td>
                 </tr>
-            {% endfor %}
-        {% endif %} 
                 <tr>
-                    <td>
-                        <form action = "/" method = "POST">     
-                            <input type = "text" name = "content" id = "content"/>
-                    </td>
-                    <td id = "currentdate">
-                        <script>
-                            var today = new Date();
-                            var dd = String(today.getDate()).padStart(2, '0');
-                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                            var yyyy = today.getFullYear();
-                            today = yyyy + '-' + mm + '-' + dd;
-                            document.getElementById("currentdate").innerHTML = today;
-                        </script>
+                     <td>
+                    <form action = "/update/{{task.id}}" method = "POST">   
+                        
+                        <input type = "text" name = "content" 
+                            id = "{{task.id}}"
+                            value = "{{task.content}}" />
                     </td>
                     <td>
-                        <input type = "submit" value = "Add this Task" />
+                        
+                    </td>
+                    <td>
+                        <input type = "submit" value = "Update Task!" />
                         </form>
                     </td>
                 </tr>
-        {% if taskstoupdate %}
+
+            {% endfor %}
+        {% endif %} 
+
+<!--
+                <tr>
+                    <th colspan = "3">This is the update</th>
+                </tr>
                 <tr>
                     <td>
-                        <form action = "/update/{{tasktoupdate.id}}" method = "POST">     
+                        <form action = "/update/{tasktoupdate.id}}" method = "POST">     
                         <input type = "text" name = "content" 
                             id = "content"
-                            value = "{{taskstoupdate.content}}" />
+                            value = "{tasktoupdate.content}}" />
                     </td>
                     <td>
                         (now)
@@ -64,16 +100,17 @@
                         </form>
                     </td>
                 </tr>
-        {% endif %}
-
-        {% if taskstoget|length ==  0 %}
-                <tr>
-                    <td colspan = "3">
-                        There are no tasks - create one!
-                    </td>
-                </tr>
-        {% endif %}                
+      
+            -->
+               
         
     </table>
-
+    <hr>
+    Request attributes:
+    <ol>
+        <li>Request method is: {{ request.method }}.</li>
+        <li>Request host is: {{ request.host }}.</li>
+        <li>Request referrer is: {{ request.referrer }}.</li>
+        <li>Request User-Agent is: {{ request.user_agent }}.</li>
+    </ol>
 {% endblock %} 
