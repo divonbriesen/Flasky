@@ -50,6 +50,10 @@ def delete(id):
     except IOError:
         return "there was a delete problem"
 
+@app.route('/modify/<int:id>')
+def modify(id):
+    return redirect('/?action=modify&id=' + str(id))
+
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     taskToUpdate = Todo.query.get_or_404(id)
