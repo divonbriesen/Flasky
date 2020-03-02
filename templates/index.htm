@@ -34,7 +34,7 @@
         <tr>
             <td>
                 <form action = "/" method = "POST">     
-                    <input type = "text" name = "content" id = "content"/>
+                    <input style  = "font-size: 100%;" type = "text" name = "content" id = "content" placeholder="Type in your new task..." />
             </td>
             <td id = "currentdate">
                 <script>
@@ -56,41 +56,34 @@
         </th>
         {% if taskstoget|length > 0 %}
             {% for task in taskstoget %}
-                <tr>
-                    <td>{{ task.content}}</td>
-                    <td>{{ task.date_created.date() }}</td>
-                    <td>
-                <!--  <a href = "/modify/{{task.id}}?action=update">!Update</a>
-                        <a href = "/action=update">Update</a>
-                  -->   
-                         <a href = "/modify/{{task.id}}">Edit</a>
-                         |
-                         <a href = "/delete/{{task.id}}">Delete</a>
-                    </td>
-                </tr>
 
-                {% if request.args.get('action') == 'modify' %}
-                    {% if request.args.get('id')|int == task.id|int %} 
-                <tr>
-                     <td>
-<!--This is task id: {{task.id}}. Need to MODIFY record id {{request.args.get('id')}}.  THEY MATCH!
-                         -->
-                    <form action = "/update/{{task.id}}" method = "POST">   
-                        
+            <tr>
+                <td>
+                {% if request.args.get('action') == 'modify' and
+                    request.args.get('id')|int == task.id|int %} 
+                
+                    <form action = "/update/{{task.id}}" method = "POST">     
                         <input type = "text" name = "content" 
-                            id = "{{task.id}}"
+                           style  = "font-size: 100%;" id = "{{task.id}}"
                             value = "{{task.content}}" />
                     </td>
                     <td>
                     </td>
                     <td>
                         <input type = "submit" value = "Update Task!" />
-                        </form>
+                    </form>
+
+                {% else %}<!-- not action = modify -->
+
+                    {{ task.content}}</td>
+                    <td>{{ task.date_created.date() }}</td>
+                    <td><a href = "/modify/{{task.id}}">Edit</a>
+                        | <a href = "/delete/{{task.id}}">Delete</a>
+             
+                {% endif %}
+            
                     </td>
                 </tr>
-                    {% endif %}
-                {% endif %}
-
             {% endfor %}
         {% endif %} 
 
