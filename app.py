@@ -72,6 +72,5 @@ def update(id):
         # return render_template('update.html', tasktoupdate=taskToUpdate)
         return render_template("index.htm", tasktoupdate=taskToUpdate) 
 
-
 if __name__ == "__main__":
     app.run(debug=True)
