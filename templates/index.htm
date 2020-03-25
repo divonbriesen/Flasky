@@ -1,35 +1,99 @@
 {% extends 'base.htm' %}
 {% block head %}
-<h1>Zen Master</h1>
+
 {% endblock %} 
 {% block body %}
-<div class = "content">
 
-<h2>ZenMaster</h2>
+{% if  request.args.get('action')  == 'update' %}
+    <h3>Just UPDATED record id 
+        {{request.args.get('id')}}.</h3>
+{% elif request.args.get('action') == 'modify' %}
+    <h3>Need to MODIFY record id 
+        {{request.args.get('id')}}.</h3>
+{% elif request.args.get('action') == 'delete' %}
+    <h3>Just DELETED record id 
+        {{request.args.get('id')}}.</h3>
+{% elif request.args.get('action') == 'insert' %}
+    <h3>Just INSERTED new record id {{request.args.get('id')}}.</h3>
+{% else %}
+    <h3>Welcome! Now get busy...</h3>
+{% endif %}
 
-<table>
-<tr>
-    <th>Task</th>
-    <th>Added</th>
-    <th>Actions</th>
-</tr>
-{% for task in tasks %}
-    <tr>
-        <td>{{ task.content}}</td>
-        <td>{{ task.date_created.date() }}</td>
-        <td>
-            <a href = "/delete/{{task.id}}">Delete</a>
-            <br/>
-            <a href = "">Update</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-<form action = "/" method = "POST">
-    <input type = "text" name = "content" id = "content" />
-    <input type = "submit" value = "Add Task" />
+    <table>
+        <tr>
+            <th colspan = "3">
+                You have  {{taskstoget|count}} tasks. Add one below!
+                <hr/>
+            </th>
+        </tr>
+        <tr>
+            <th>Task</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>
+                <form action = "/" method = "POST">     
+                    <input style  = "font-size: 100%;" type = "text" name = "content" id = "content" placeholder="Type in your new task..." />
+            </td>
+            <td id = "currentdate">
+                <script>
+                    var today = new Date();
+                    var dd = String(today.getDate()).padStart(2, '0');
+                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = today.getFullYear();
+                    today = yyyy + '-' + mm + '-' + dd;
+                    document.getElementById("currentdate").innerHTML = today;
+                </script>
+            </td>
+            <td>
+                <input type = "submit" value = "Add this Task" />
+                </form>
+            </td>
+        </tr>
+        <th colspan = "3">
+            <hr/>
+        </th>
+        {% if taskstoget|length > 0 %}
+            {% for task in taskstoget %}
 
-</form>
+            <tr>
+                <td>
+                {% if request.args.get('action') == 'modify' and
+                    request.args.get('id')|int == task.id|int %} 
+                
+                    <form action = "/update/{{task.id}}" method = "POST">     
+                        <input type = "text" name = "content" 
+                           style  = "font-size: 100%;" id = "{{task.id}}"
+                            value = "{{task.content}}" />
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input type = "submit" value = "Update Task!" />
+                    </form>
 
-</div>
+                {% else %}<!-- not action = modify -->
+
+                    {{ task.content}}</td>
+                    <td>{{ task.date_created.date() }}</td>
+                    <td><a href = "/modify/{{task.id}}">Edit</a>
+                        | <a href = "/delete/{{task.id}}">Delete</a>
+             
+                {% endif %}
+            
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %} 
+
+    </table>
+    <hr>
+    Request attributes:
+    <ol>
+        <li>Request method is: {{ request.method }}.</li>
+        <li>Request host is: {{ request.host }}.</li>
+        <li>Request referrer is: {{ request.referrer }}.</li>
+        <li>Request User-Agent is: {{ request.user_agent }}.</li>
+    </ol>
 {% endblock %} 

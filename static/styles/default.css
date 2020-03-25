@@ -1,22 +1,50 @@
 body
 {
-	font-family: tahoma;
-	color: red;
-	background-color: silver;
+	font-family: tahoma, sans-serif;
+	color: ivory;
+	background-color: teal;
 	margin-left: 200px;
 	margin-right: 200px;
+	font-size: 150%;
 }
 
 header, footer
 {
 	text-align: center;
-	color: green;
-	font-weight: bold;
+}
+
+main
+{
+	padding: 20px;
+	margin: 0 auto;
+}
+
+a
+{
+	text-decoration: none;
+	color: blueviolet;
+}
+
+a:hover
+{
+	text-decoration: overline underline;
+}
+
+table
+{
+	margin: 0 auto;
+	padding: 5px;
+	border: 4px double indigo;
+}
+th
+{
+	text-align: center;
 }
 
 td
 {
-	border: 2px dotted indigo;
+	padding: 5px;
+	border: 1px solid teal;
 }
 
 h1, h2, h3
@@ -33,7 +61,6 @@ figure
 figcaption
 {
 	font-style: italic;
-	font-weight: bold;
 }
 
 .attribute

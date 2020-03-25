@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang = "en">
-	<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content = "ie=edge">
-        
-        <link rel = "stylesheet" 
-        href = "{{ url_for('static', filename='styles/default.css')}}" type = "text/css" />
-		{% block head %}{% endblock %} 
-        <!-- inserts code for all other pages -->
-        <title>
-        a flask page
-		</title>
-	</head>
-<body>
-    {% block body %}{% endblock %} 
-<!-- header here -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content = "ie=edge">
+    
+    <link rel = "stylesheet" 
+    href = "{{ url_for('static', filename='styles/default.css') }}" type = "text/css" />
+    {% block head %}
+    <!-- place for unique code on other pages that use this page
+        as their base -->
+    {% endblock %} 
 
-<main>	
-	<h1>Introducing !!</h1>
-	<figure>
-		<img src="{{ url_for('static', filename='images/users/profileimage (00).png')}}" alt = "an image!" />
-		<figcaption>
-			a caption
-		</figcaption>
-	</figure>
-	<ul>
-        <li>a list thing</li>
-        <li>another list thing</li>
-    </ul>
-</main>
-<!-- footer here -->
+    <title>
+        ZEN MASTER - a DubBriesenMoore Production with Limited Scope and Capacity
+    </title>
+</head>
+<body>	
+    <header>
+        <h1>ZEN MASTER - a DubBriesenMoore Production with Limited Scope and Capacity</h1>
+        <h2>Where your predictions are proven....
+            <br/>
+                    ....right or wrong!
+        </h2>
+    </header>
+    <!-- ========================================== -->
+    <main>	
+    {% block body %}
+        <p>nothing between these blocks shows up</p>
+    {% endblock %} 
+    </main>
+    <!-- ========================================== -->
+    <footer>
+        <figure>
+            <img src="{{ url_for('static', filename='images/users/profileimage (00).png') }}" alt = "an image!" height = "300" />
+            <figcaption>
+                &copy; 2099,	Designed by bumbleshoot enterprises Ltd. 
+            </figcaption>
+        </figure>
+    </footer>
 </body>
 </html>
