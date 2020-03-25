@@ -40,7 +40,7 @@ def delete(id):
 
     try:
         db.session.delete(task_to_delete)
-        db.session.commit();
+        db.session.commit()
         return redirect('/')
     except:
         return "there was a delete problem"
