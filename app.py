@@ -30,10 +30,10 @@ def index():
             id = new_task.id              # added from stack overflow
             return redirect('/?action=insert&id=' + str(id))
         except IOError:
-            return "There was an issue adding your task."  
+            return "There was an issue adding your task."
     else:  # it's GET, not generating a form, just loading page
         tasksToGet = Todo.query.order_by(Todo.date_created).all()
-        return render_template("index.htm", taskstoget=tasksToGet) 
+        return render_template("index.htm", taskstoget=tasksToGet)
     # render_template knows to look in templates folder
     # "template inheritance" - "master html file" - inherit
     # from each other page, and change what's relevant.
@@ -50,9 +50,11 @@ def delete(id):
     except IOError:
         return "there was a delete problem"
 
+
 @app.route('/modify/<int:id>')
 def modify(id):
     return redirect('/?action=modify&id=' + str(id))
+
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -70,7 +72,8 @@ def update(id):
     else:  # form not submitted, just show page
         print("About to update the entry for " + taskToUpdate.content + "...")
         # return render_template('update.html', tasktoupdate=taskToUpdate)
-        return render_template("index.htm", tasktoupdate=taskToUpdate) 
+        return render_template("index.htm", tasktoupdate=taskToUpdate)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
