@@ -14,7 +14,8 @@
     <h3>Just DELETED record id 
         {{request.args.get('id')}}.</h3>
 {% elif request.args.get('action') == 'insert' %}
-    <h3>Just INSERTED new record id {{request.args.get('id')}}.</h3>
+    <h3>Just INSERTED new record id 
+        {{request.args.get('id')}}.</h3>
 {% else %}
     <h3>Welcome! Now get busy...</h3>
 {% endif %}
@@ -22,7 +23,7 @@
     <table>
         <tr>
             <th colspan = "3">
-                You have  {{taskstoget|count}} tasks. Add one below!
+                You have  {{taskstoget|count}} tasks (slacker). Add one below!
                 <hr/>
             </th>
         </tr>
@@ -51,9 +52,9 @@
                 </form>
             </td>
         </tr>
-        <th colspan = "3">
+        <td colspan = "3">
             <hr/>
-        </th>
+        </td>
         {% if taskstoget|length > 0 %}
             {% for task in taskstoget %}
 
@@ -67,7 +68,15 @@
                            style  = "font-size: 100%;" id = "{{task.id}}"
                             value = "{{task.content}}" />
                     </td>
-                    <td>
+                    <td id = "currentdate2">
+                        <script>
+                            var today = new Date();
+                            var dd = String(today.getDate()).padStart(2, '0');
+                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                            var yyyy = today.getFullYear();
+                            today = yyyy + '-' + mm + '-' + dd;
+                            document.getElementById("currentdate2").innerHTML = today;
+                        </script>
                     </td>
                     <td>
                         <input type = "submit" value = "Update Task!" />
